@@ -31,13 +31,14 @@
             border-radius: 15px;
             margin-bottom: 20px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: opacity 0.5s ease-in-out;
         }
 
         h1 {
             color: #ff4d6d;
             font-size: 26px;
             margin-bottom: 30px;
-            min-height: 60px; /* Keeps layout stable when text changes */
+            min-height: 60px;
         }
 
         .btn-container {
@@ -81,7 +82,6 @@
             background-color: #fff0f3;
         }
 
-        /* Animation for the "Please Baby" text */
         .shake {
             animation: shake 0.5s;
             color: #d63353;
@@ -102,10 +102,12 @@
         }
     </style>
 </head>
-<body>
+<body onclick="playMusic()"> <audio id="bgMusic" loop>
+        <source src="valentine.mp3" type="audio/mpeg">
+    </audio>
 
     <div class="container">
-        <img src="valentine.png" alt="My Photo">
+        <img id="valentineImg" src="valentine.jpg" alt="My Photo">
         
         <h1 id="mainText">Will you be my Valentine?</h1>
         
@@ -116,25 +118,39 @@
     </div>
 
     <script>
+        function playMusic() {
+            var music = document.getElementById("bgMusic");
+            music.play().catch(error => {
+                console.log("Auto-play was blocked. Waiting for interaction.");
+            });
+        }
+
+        // Try to play immediately when page loads
+        window.onload = playMusic;
+
         function sayNo() {
+            playMusic(); // Ensure music plays if she clicks No
             const textElement = document.getElementById("mainText");
             textElement.innerText = "Please Baby!! Please Baby!! 🥺";
             textElement.classList.add("shake");
             
-            // Remove the shake class after animation so it can shake again if clicked again
             setTimeout(() => {
                 textElement.classList.remove("shake");
             }, 500);
         }
 
         function sayYes() {
+            playMusic(); // Ensure music plays if she clicks Yes
             const textElement = document.getElementById("mainText");
             textElement.innerText = "You have created a lifetime memory ❤️";
             
-            // Hide the buttons after she says yes
+            // Hide buttons
             document.getElementById("buttons").style.display = "none";
             
-            // Add some confetti effect (simple emoji shower)
+            // Change image
+            document.getElementById("valentineImg").src = "saath.jpg";
+            
+            // Start confetti
             startConfetti();
         }
 
@@ -156,7 +172,6 @@
             }, 100);
         }
 
-        // Add falling animation style dynamically
         const styleSheet = document.createElement("style");
         styleSheet.innerText = `
             @keyframes fall {
