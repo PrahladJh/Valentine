@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Natasha</title>
+    <style>
+        body {
+            background-color: #ffe6e9; /* Soft pink background */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 90%;
+            width: 400px;
+        }
+
+        img {
+            width: 100%;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #ff4d6d;
+            font-size: 26px;
+            margin-bottom: 30px;
+            min-height: 60px; /* Keeps layout stable when text changes */
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: bold;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .yes-btn {
+            background-color: #ff4d6d;
+            color: white;
+            box-shadow: 0 4px 10px rgba(255, 77, 109, 0.3);
+        }
+
+        .yes-btn:hover {
+            background-color: #d63353;
+            transform: scale(1.05);
+        }
+
+        .no-btn {
+            background-color: white;
+            color: #ff4d6d;
+            border: 2px solid #ff4d6d;
+        }
+
+        .no-btn:hover {
+            background-color: #fff0f3;
+        }
+
+        /* Animation for the "Please Baby" text */
+        .shake {
+            animation: shake 0.5s;
+            color: #d63353;
+        }
+
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="valentine.jpg" alt="My Photo">
+        
+        <h1 id="mainText">Will you be my Valentine?</h1>
+        
+        <div class="btn-container" id="buttons">
+            <button class="yes-btn" onclick="sayYes()">Yes</button>
+            <button class="no-btn" onclick="sayNo()">No</button>
+        </div>
+    </div>
+
+    <script>
+        function sayNo() {
+            const textElement = document.getElementById("mainText");
+            textElement.innerText = "Please Baby!! Please Baby!! 🥺";
+            textElement.classList.add("shake");
+            
+            // Remove the shake class after animation so it can shake again if clicked again
+            setTimeout(() => {
+                textElement.classList.remove("shake");
+            }, 500);
+        }
+
+        function sayYes() {
+            const textElement = document.getElementById("mainText");
+            textElement.innerText = "You have created a lifetime memory ❤️";
+            
+            // Hide the buttons after she says yes
+            document.getElementById("buttons").style.display = "none";
+            
+            // Add some confetti effect (simple emoji shower)
+            startConfetti();
+        }
+
+        function startConfetti() {
+            document.body.style.overflow = "hidden";
+            setInterval(() => {
+                const heart = document.createElement("div");
+                heart.innerText = "❤️";
+                heart.style.position = "fixed";
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.top = "-50px";
+                heart.style.fontSize = Math.random() * 20 + 20 + "px";
+                heart.style.animation = "fall 3s linear";
+                document.body.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 3000);
+            }, 100);
+        }
+
+        // Add falling animation style dynamically
+        const styleSheet = document.createElement("style");
+        styleSheet.innerText = `
+            @keyframes fall {
+                to { transform: translateY(100vh); }
+            }
+        `;
+        document.head.appendChild(styleSheet);
+    </script>
+
+</body>
+</html>
